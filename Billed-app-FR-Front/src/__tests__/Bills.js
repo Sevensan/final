@@ -59,8 +59,38 @@
          userEvent.click(newBillButton)
          expect(handleClickNewBill).toHaveBeenCalled()
          expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
-       })
+        })
      })
+    //  describe('I clicked on New Bill and I go back', () => {
+    //   test('Then I am on bill page', async () => {
+    //     const onNavigate = ( pathname ) => {
+    //       document.body.innerHTML = ROUTES({ pathname })
+    //     }
+    //     Object.defineProperty(window, 'localStorage', { value : localStorageMock})
+    //     window.localStorage.setItem('user', JSON.stringify({
+    //       type: 'Employee'
+    //     }))
+    //     const store = null
+    //     const newBill = new Bill({ document, onNavigate, store, localStorage: window.localStorage})
+    //     const html = BillsUI({ data: bills })
+    //     document.body.innerHTML = html
+    //     const handleClickNewBill = jest.fn(() => newBill.handleClickNewBill())
+    //     const newBillButton = screen.getByTestId('btn-new-bill')
+    //     newBillButton.addEventListener('click', handleClickNewBill)
+    //     userEvent.click(newBillButton)
+    //     expect(handleClickNewBill).toHaveBeenCalled()
+    //     expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
+    //     const goBack = jest.fn(() => window.history.go(-1))
+    //     goBack()
+    //     expect(goBack).toHaveBeenCalled()
+    //     await waitFor(() => screen.getByText("Mes notes de frais"))
+    //     expect(screen.getByTestId("btn-new-bill")).toBeTruthy()
+    //    })
+    // })
+
+
+
+
      describe('If I click on eye icon', () => {
        test('Then a modal file should appear', () => {
          // define localstorage
@@ -95,6 +125,46 @@
          expect(screen.getByText('Justificatif')).toBeTruthy()
        })
      })
+
+     describe('The modal appeared and I click on close button', () => {
+      test('Then the modal should disappear', () => {
+        // define localstorage
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }))
+        // html template
+        const html = BillsUI({ data: bills })
+
+        document.body.innerHTML = html
+        //navigation
+        const onNavigate = ( pathname ) => {
+          document.body.innerHTML = ROUTES({ pathname })
+        }
+        const store = null
+        const newBill = new Bill({
+          document,
+          onNavigate,
+          store,
+          bills,
+          localStorage: window.localStorage
+        })
+        $.fn.modal = jest.fn()
+        const eyes = screen.getAllByTestId('icon-eye')
+        eyes.forEach(eye => {
+          const handleClickIconEye = jest.fn(() => newBill.handleClickIconEye(eye))
+          eye.addEventListener('click', handleClickIconEye)
+          userEvent.click(eye)
+        })
+        const closeButton = screen.getByTestId("btn-close")
+        const billModal = screen.getByTestId("bill-modal")
+        userEvent.click(closeButton)
+        expect(billModal.classList.contains('show')).toBe(false)
+      })
+    })
+
+
+
      describe('Given content is a loading', () => {
        test('Then a loading page should appear', () => {
          const html = BillsUI({ loading: true })
@@ -108,6 +178,21 @@
          document.body.innerHTML = html
          expect(screen.getAllByText('Erreur')).toBeTruthy()
        })
+     })
+     describe('If I click on back button', () => {
+      test('Then I should stay on bill page', () => {
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+        window.localStorage.setItem('user', JSON.stringify({
+          type: 'Employee'
+        }))
+        const root = document.createElement("div")
+        root.setAttribute("id", "root")
+        document.body.append(root)
+        router()
+        window.onNavigate(ROUTES_PATH.Bills)
+        window.history.back()
+        expect(screen.getAllByTestId('icon-window')).toBeTruthy()
+      })
      })
    })
  })
