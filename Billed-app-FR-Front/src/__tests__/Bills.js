@@ -6,7 +6,6 @@
  import BillsUI from "../views/BillsUI.js"
  import { bills } from "../fixtures/bills.js"
  import Bill from "../containers/Bills.js"
-//  import store from "../app/Store.js"
  import mockStore from "../__mocks__/store"
  import userEvent from '@testing-library/user-event'
  import { ROUTES_PATH, ROUTES } from "../constants/routes.js";
@@ -30,7 +29,6 @@
        window.onNavigate(ROUTES_PATH.Bills)
        await waitFor(() => screen.getByTestId('icon-window'))
        const windowIcon = screen.getByTestId('icon-window')
-       //to-do write expect expression
        expect(windowIcon.classList.contains('active-icon')).toBe(true)
      })
      test("Then bills should be ordered from earliest to latest", () => {
@@ -61,32 +59,6 @@
          expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
         })
      })
-    //  describe('I clicked on New Bill and I go back', () => {
-    //   test('Then I am on bill page', async () => {
-    //     const onNavigate = ( pathname ) => {
-    //       document.body.innerHTML = ROUTES({ pathname })
-    //     }
-    //     Object.defineProperty(window, 'localStorage', { value : localStorageMock})
-    //     window.localStorage.setItem('user', JSON.stringify({
-    //       type: 'Employee'
-    //     }))
-    //     const store = null
-    //     const newBill = new Bill({ document, onNavigate, store, localStorage: window.localStorage})
-    //     const html = BillsUI({ data: bills })
-    //     document.body.innerHTML = html
-    //     const handleClickNewBill = jest.fn(() => newBill.handleClickNewBill())
-    //     const newBillButton = screen.getByTestId('btn-new-bill')
-    //     newBillButton.addEventListener('click', handleClickNewBill)
-    //     userEvent.click(newBillButton)
-    //     expect(handleClickNewBill).toHaveBeenCalled()
-    //     expect(screen.getByText('Envoyer une note de frais')).toBeTruthy()
-    //     const goBack = jest.fn(() => window.history.go(-1))
-    //     goBack()
-    //     expect(goBack).toHaveBeenCalled()
-    //     await waitFor(() => screen.getByText("Mes notes de frais"))
-    //     expect(screen.getByTestId("btn-new-bill")).toBeTruthy()
-    //    })
-    // })
 
 
 

@@ -102,32 +102,6 @@ describe("When I am on NewBill Page and I am adding an invalid file", () => {
   })
 })
 
-// describe("When I am on NewBill Page and I click on disconnect button", () => {
-//   test("Then we should go to login page", () => {
-//     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-//     window.localStorage.setItem('user', JSON.stringify({
-//       type: 'Employee'
-//     }))
-
-//     const html = NewBillUI()
-//     document.body.innerHTML = html
-
-//     const onNavigate = (pathname) => {
-//       document.body.innerHTML = ROUTES({ pathname })
-//     }
-
-//     const logout = new Logout({ document, onNavigate, localStorage })
-//     const handleClick = jest.fn(logout.handleClick)
-
-//     const disco = screen.getByTestId('layout-disconnect')
-//     disco.addEventListener('click', handleClick)
-//     userEvent.click(disco)
-//     expect(handleClick).toHaveBeenCalled()
-//     expect(screen.getByText('Administration')).toBeTruthy()
-//   })
-// })
-
-
 describe('Given I am connected', () => {
   describe('When I click on disconnect button', () => {
     test(('Then, I should be sent to login page'), () => {
